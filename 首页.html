@@ -163,7 +163,7 @@
             `;
 
             // 更新图片
-            mainImage.src = "https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH%E5%AE%9E%E6%9C%A8%E7%9F%B3%E8%86%8F%E7%BA%BF.jpg"; // 修改为对应的图片路径
+            mainImage.src = "https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH%E5%AE%9E%E6%9C%A8%E7%9F%B3%E8%86%8D%E7%BA%BF.jpg"; // 修改为对应的图片路径
         }
 
         /**
@@ -171,6 +171,7 @@
          */
         function showTCSeries() {
             let buttonsContainer = document.getElementById("buttons-container");
+            let mainImage = document.querySelector(".main-image");
 
             // 重新填充按钮内容，变成8个按钮，每行2个
             buttonsContainer.innerHTML = `
@@ -191,6 +192,9 @@
                     <button class="button">TC系列 8</button>
                 </div>
             `;
+
+            // 更新图片
+            mainImage.src = "https://example.com/path/to/tc-series-image.jpg"; // 替换为TC系列的对应图片链接
         }
 
         /**
@@ -198,6 +202,7 @@
          */
         function showTFSeries() {
             let buttonsContainer = document.getElementById("buttons-container");
+            let mainImage = document.querySelector(".main-image");
 
             // 重新填充按钮内容，变成6个按钮，每行2个
             buttonsContainer.innerHTML = `
@@ -214,15 +219,19 @@
                     <button class="button">TF系列 6</button>
                 </div>
             `;
+
+            // 更新图片
+            mainImage.src = "https://example.com/path/to/tf-series-image.jpg"; // 替换为TF系列的对应图片链接
         }
 
         /**
-         * 点击 "巴西白木木线系列" 按钮，显示5个按钮，每行2个
+         * 点击 "巴西白木木线系列" 按钮，显示4个按钮，每行2个
          */
         function showBrazilSeries() {
             let buttonsContainer = document.getElementById("buttons-container");
+            let mainImage = document.querySelector(".main-image");
 
-            // 重新填充按钮内容，变成5个按钮，每行2个
+            // 重新填充按钮内容，变成4个按钮，每行2个
             buttonsContainer.innerHTML = `
                 <div class="button-row">
                     <button class="button">巴西系列 1</button>
@@ -232,14 +241,14 @@
                     <button class="button">巴西系列 3</button>
                     <button class="button">巴西系列 4</button>
                 </div>
-                <div class="button-row">
-                    <button class="button">巴西系列 5</button>
-                </div>
             `;
+
+            // 更新图片
+            mainImage.src = "https://example.com/path/to/brazil-series-image.jpg"; // 替换为巴西系列的对应图片链接
         }
 
-        // 确保页面加载时，默认显示主页面按钮
-        window.onload = loadHomePage;
+        // 加载主页面
+        loadHomePage();
     </script>
 
 </body>
