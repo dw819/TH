@@ -22,13 +22,16 @@
         /* 图片容器样式 */
         .image-container {
             width: 100%;
+            height: 100%; /* 设置容器高度为100% */
             margin-bottom: 20px; /* 图片与按钮的间隔 */
+            overflow: hidden; /* 隐藏溢出部分 */
         }
 
         /* 主图片样式 */
         .main-image {
             width: 100%; /* 让图片自适应容器宽度 */
-            height: 300px; /* 固定高度 */
+            height: auto; /* 高度自动调整 */
+            max-height: 100%; /* 限制图片最大高度为容器高度 */
             object-fit: cover; /* 保持图片比例 */
             border-radius: 10px; /* 让图片四角圆润 */
         }
@@ -112,58 +115,56 @@
         /**
          * 加载主页面（默认显示4个按钮）
          */
-         function loadHomePage() {
-    let buttonsContainer = document.getElementById("buttons-container");
-    let mainImage = document.querySelector(".main-image"); // 获取主图片元素
+        function loadHomePage() {
+            let buttonsContainer = document.getElementById("buttons-container");
+            let mainImage = document.querySelector(".main-image"); // 获取主图片元素
 
-    // 重新填充按钮内容
-    buttonsContainer.innerHTML = `
-        <div class="button-row">
-            <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
-        </div>
-        <div class="button-row">
-            <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
-        </div>
-        <div class="button-row">
-            <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
-        </div>
-        <div class="button-row">
-            <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
-        </div>
-    `;
+            // 重新填充按钮内容
+            buttonsContainer.innerHTML = `
+                <div class="button-row">
+                    <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
+                </div>
+                <div class="button-row">
+                    <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
+                </div>
+                <div class="button-row">
+                    <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
+                </div>
+                <div class="button-row">
+                    <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
+                </div>
+            `;
 
-    // 恢复首页的默认图片
-    mainImage.src = "https://dw819.github.io/TH/TH%E5%95%86%E6%A0%87.jpg"; // 修改为首页对应的图片路径
-}
+            // 恢复首页的默认图片
+            mainImage.src = "https://dw819.github.io/TH/TH%E5%95%86%E6%A0%87.jpg"; // 修改为首页对应的图片路径
+        }
 
+        /**
+         * 点击 "TH石膏线系列" 按钮，显示6个按钮，每行2个
+         */
+        function showTHSeries() {
+            let buttonsContainer = document.getElementById("buttons-container");
+            let mainImage = document.querySelector(".main-image");
 
-       /**
- * 点击 "TH石膏线系列" 按钮，显示6个按钮，每行2个
- */
-function showTHSeries() {
-    let buttonsContainer = document.getElementById("buttons-container");
-    let mainImage = document.querySelector(".main-image");
+            // 重新填充按钮内容，变成6个按钮，每行2个
+            buttonsContainer.innerHTML = `
+                <div class="button-row">
+                    <button class="button">石膏线 A</button>
+                    <button class="button">石膏线 B</button>
+                </div>
+                <div class="button-row">
+                    <button class="button">石膏线 C</button>
+                    <button class="button">石膏线 D</button>
+                </div>
+                <div class="button-row">
+                    <button class="button">石膏线 E</button>
+                    <button class="button">石膏线 F</button>
+                </div>
+            `;
 
-    // 重新填充按钮内容，变成6个按钮，每行2个
-    buttonsContainer.innerHTML = `
-        <div class="button-row">
-            <button class="button">石膏线 A</button>
-            <button class="button">石膏线 B</button>
-        </div>
-        <div class="button-row">
-            <button class="button">石膏线 C</button>
-            <button class="button">石膏线 D</button>
-        </div>
-        <div class="button-row">
-            <button class="button">石膏线 E</button>
-            <button class="button">石膏线 F</button>
-        </div>
-    `;
-
-    // 更新图片
-   mainImage.src = "https://dw819.github.io/TH/TH%E5%95%86%E6%A0%87.jpg"; // 修改为对应的图片路径
-}
-
+            // 更新图片
+            mainImage.src = "https://dw819.github.io/TH/TH%E5%95%86%E6%A0%87.jpg"; // 修改为对应的图片路径
+        }
 
         /**
          * 点击 "TC实木涂油线系列" 按钮，显示8个按钮，每行2个
