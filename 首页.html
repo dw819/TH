@@ -37,15 +37,9 @@
             gap: 20px;
         }
 
-        .button-row {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            width: 100%;
-        }
-
         .button {
-            width: 200px;
+            width: 80%;
+            max-width: 300px;
             padding: 15px;
             background-color: #4CAF50;
             color: white;
@@ -58,6 +52,13 @@
 
         .button:hover {
             background-color: #45a049;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
         }
 
         .image-grid {
@@ -118,14 +119,10 @@
             lastSeriesFunction = null;
 
             buttonsContainer.innerHTML = `
-                <div class="button-row">
-                    <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
-                    <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
-                </div>
-                <div class="button-row">
-                    <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
-                    <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
-                </div>
+                <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
+                <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
+                <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
+                <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
             `;
 
             mainImage.src = "https://dw819.github.io/TH/docs/TH商标.jpg";
