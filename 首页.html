@@ -5,56 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>图片与按钮页面</title>
     <style>
-        /* 全局样式重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* 页面主体样式 */
         body {
             padding: 20px;
-            padding-bottom: 80px; /* 预留底部按钮空间 */
+            padding-bottom: 80px;
             text-align: center;
         }
 
-        /* 图片容器 */
         .image-container {
             width: 100%;
-            height: auto;
             margin-bottom: 20px;
             overflow: hidden;
         }
 
-        /* 主图片样式 */
         .main-image {
             width: 100%;
-            height: auto;
             max-height: 400px;
             object-fit: cover;
             border-radius: 10px;
         }
 
-        /* 按钮容器 */
         .buttons-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
         }
 
-        /* 按钮行 */
         .button-row {
             display: flex;
             justify-content: center;
-            gap: 50px;
+            gap: 30px;
             width: 100%;
         }
 
-        /* 按钮样式 */
         .button {
-            width: 220px;
+            width: 200px;
             padding: 15px;
             background-color: #4CAF50;
             color: white;
@@ -69,7 +60,6 @@
             background-color: #45a049;
         }
 
-        /* 图片详情页：两张图片 */
         .image-grid {
             display: flex;
             justify-content: center;
@@ -82,7 +72,6 @@
             border-radius: 8px;
         }
 
-        /* 底部导航栏 */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -94,7 +83,6 @@
             justify-content: space-around;
         }
 
-        /* 底部按钮 */
         .nav-button {
             padding: 10px 30px;
             background-color: #555;
@@ -107,25 +95,21 @@
 </head>
 <body>
 
-    <!-- 图片区域 -->
     <div class="image-container">
         <img src="https://dw819.github.io/TH/docs/TH商标.jpg" class="main-image">
     </div>
 
-    <!-- 按钮区域 -->
     <div id="buttons-container" class="buttons-container"></div>
 
-    <!-- 底部导航 -->
     <div class="bottom-nav">
         <button class="nav-button" onclick="loadHomePage()">首页</button>
         <button class="nav-button" onclick="goBack()">返回</button>
     </div>
 
     <script>
-        let currentPage = "home"; // 记录当前页面
-        let lastSeriesFunction = null; // 记录上一级系列的函数
+        let currentPage = "home";
+        let lastSeriesFunction = null;
 
-        /** 加载首页 */
         function loadHomePage() {
             let buttonsContainer = document.getElementById("buttons-container");
             let mainImage = document.querySelector(".main-image");
@@ -136,14 +120,10 @@
             buttonsContainer.innerHTML = `
                 <div class="button-row">
                     <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
-                </div>
-                <div class="button-row">
                     <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
                 </div>
                 <div class="button-row">
                     <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
-                </div>
-                <div class="button-row">
                     <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
                 </div>
             `;
@@ -152,7 +132,6 @@
             mainImage.style.display = "block";
         }
 
-        /** 通用方法：进入系列页面 */
         function showSeries(seriesName, imageUrl, sizes, detailFunction) {
             let buttonsContainer = document.getElementById("buttons-container");
             let mainImage = document.querySelector(".main-image");
@@ -160,40 +139,43 @@
             currentPage = "series";
             lastSeriesFunction = () => showSeries(seriesName, imageUrl, sizes, detailFunction);
 
-            let buttonsHTML = sizes.map(size => 
+            let buttonsHTML = sizes.map((size, index) => 
                 `<button class="button" onclick="${detailFunction}('${size}')">${size}</button>`
-            ).join('');
+            );
 
-            buttonsContainer.innerHTML = `<div class="button-row">${buttonsHTML}</div>`;
+            let rowsHTML = "";
+            for (let i = 0; i < buttonsHTML.length; i += 2) {
+                rowsHTML += `<div class="button-row">
+                    ${buttonsHTML[i]} 
+                    ${buttonsHTML[i + 1] ? buttonsHTML[i + 1] : ""}
+                </div>`;
+            }
+
+            buttonsContainer.innerHTML = rowsHTML;
             mainImage.src = imageUrl;
             mainImage.style.display = "block";
         }
 
-        /** 进入 TH 石膏线系列 */
         function showTHSeries() {
             showSeries("TH 石膏线系列", "https://dw819.github.io/TH/docs/TH实木石膏线.jpg",
                 ["32mm", "36mm", "44mm", "50mm", "60mm", "80mm"], "showTHDetail");
         }
 
-        /** 进入 TC 实木涂油线系列 */
         function showTCSeries() {
             showSeries("TC 实木涂油线系列", "https://dw819.github.io/TH/docs/TC实木涂油线.jpg",
                 ["14-21mm", "23-25mm", "28-30mm", "33-38mm", "43mm", "48-56mm", "58-60mm", "68-98mm"], "showTCDetail");
         }
 
-        /** 进入 TF 石膏线系列 */
         function showTFSeries() {
             showSeries("TF 石膏线", "https://dw819.github.io/TH/docs/TF石膏线不涂底.jpg",
                 ["32mm", "36mm", "44mm", "50mm", "60mm", "75mm"], "showTFDetail");
         }
 
-        /** 进入巴西白木木线系列 */
         function showBrazilSeries() {
             showSeries("巴西白木木线", "https://dw819.github.io/TH/docs/巴西白木木线.jpg",
                 ["20mm", "25mm", "30mm", "35mm", "36mm"], "showBrazilDetail");
         }
 
-        /** 进入规格详情页 */
         function showDetail(size, series) {
             let buttonsContainer = document.getElementById("buttons-container");
             let mainImage = document.querySelector(".main-image");
@@ -215,7 +197,6 @@
         function showTFDetail(size) { showDetail(size, "TF"); }
         function showBrazilDetail(size) { showDetail(size, "巴西白木"); }
 
-        /** 返回上一级 */
         function goBack() {
             if (currentPage === "detail" && lastSeriesFunction) {
                 lastSeriesFunction();
