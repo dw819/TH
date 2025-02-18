@@ -211,69 +211,70 @@
 
     // 生成图片展示区域
     buttonsContainer.innerHTML = `
-        <div class="image-grid" style="
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); 
-            gap: 10px; 
-            width: 100vw; 
-            height: 100vh; 
-            overflow-y: auto; 
+    <div class="image-grid" style="
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); 
+        gap: 10px; 
+        width: 100vw; 
+        height: 100vh; 
+        overflow-y: auto; 
+        padding: 10px;
+        align-items: center;
+        justify-items: center;
+        transition: all 0.3s ease-in-out;
+    ">
+        ${images.map(img => `<img src="${img}" class="detail-image" style="
+            width: 100%; 
+            max-width: 475px;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            transform: scale(0.8);
+        ">`).join("")}
+    </div>
+
+    <style>
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+            gap: 10px;
+            width: 100%;
             padding: 10px;
-            align-items: center;
             justify-items: center;
-            transition: all 0.3s ease-in-out;
-        ">
-            ${images.map(img => `<img src="${img}" class="detail-image" style="
-                width: 100%; 
-                max-width: 475px;
-                border-radius: 8px;
-                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-                opacity: 0;
-                transform: scale(0.8);
-            ">`).join("")}
-        </div>
+        }
 
-        <style>
+        /* 电脑端：每行最多 4 张 */
+        @media (min-width: 1024px) {
             .image-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
-                gap: 10px;
-                width: 100%;
-                padding: 10px;
-                justify-items: center;
+                grid-template-columns: repeat(4, 1fr);
             }
+        }
 
-            /* 电脑端：每行最多 4 张 */
-            @media (min-width: 1024px) {
-                .image-grid {
-                    grid-template-columns: repeat(4, 1fr);
-                }
+        /* 平板端：每行 3 张 */
+        @media (max-width: 1023px) and (min-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
+        }
 
-            /* 平板端：每行 3 张 */
-            @media (max-width: 1023px) and (min-width: 768px) {
-                .image-grid {
-                    grid-template-columns: repeat(3, 1fr);
-                }
+        /* 手机端：每行至少 2 张 */
+        @media (max-width: 767px) {
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
+        }
 
-            /* 手机端：每行 2 张 */
-            @media (max-width: 767px) {
-                .image-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
+        .detail-image {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+    </style>
+`;
 
-            .detail-image {
-                width: 100%;
-                max-width: 100%;
-                border-radius: 8px;
-                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-                opacity: 0;
-                transform: scale(0.8);
-            }
-        </style>
-    `;
 
     // 添加动画效果，让图片逐步淡入 & 放大
     setTimeout(() => {
