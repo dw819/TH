@@ -110,36 +110,36 @@
     <script>
         let currentPage = "home";
         let lastSeriesFunction = null;
-
+    
         function loadHomePage() {
             let buttonsContainer = document.getElementById("buttons-container");
             let mainImage = document.querySelector(".main-image");
-
+    
             currentPage = "home";
             lastSeriesFunction = null;
-
+    
             buttonsContainer.innerHTML = `
                 <button class="button" onclick="showTCSeries()">TC实木涂油线系列</button>
                 <button class="button" onclick="showTFSeries()">TF石膏线 不涂底</button>
                 <button class="button" onclick="showTHSeries()">TH石膏线系列</button>
                 <button class="button" onclick="showBrazilSeries()">巴西白木木线系列</button>
             `;
-
+    
             mainImage.src = "https://dw819.github.io/TH/docs/TH商标.jpg";
             mainImage.style.display = "block";
         }
-
+    
         function showSeries(seriesName, imageUrl, sizes, detailFunction) {
             let buttonsContainer = document.getElementById("buttons-container");
             let mainImage = document.querySelector(".main-image");
-
+    
             currentPage = "series";
             lastSeriesFunction = () => showSeries(seriesName, imageUrl, sizes, detailFunction);
-
-            let buttonsHTML = sizes.map((size, index) => 
+    
+            let buttonsHTML = sizes.map(size => 
                 `<button class="button" onclick="${detailFunction}('${size}')">${size}</button>`
             );
-
+    
             let rowsHTML = "";
             for (let i = 0; i < buttonsHTML.length; i += 2) {
                 rowsHTML += `<div class="button-row">
@@ -147,53 +147,148 @@
                     ${buttonsHTML[i + 1] ? buttonsHTML[i + 1] : ""}
                 </div>`;
             }
-
+    
             buttonsContainer.innerHTML = rowsHTML;
             mainImage.src = imageUrl;
             mainImage.style.display = "block";
         }
-
+    
         function showTHSeries() {
             showSeries("TH 石膏线系列", "https://dw819.github.io/TH/docs/TH实木石膏线.jpg",
                 ["32mm", "36mm", "44mm", "50mm", "60mm", "80mm"], "showTHDetail");
         }
-
+    
         function showTCSeries() {
             showSeries("TC 实木涂油线系列", "https://dw819.github.io/TH/docs/TC实木涂油线.jpg",
                 ["14-21mm", "23-25mm", "28-30mm", "33-38mm", "43mm", "48-56mm", "58-60mm", "68-98mm"], "showTCDetail");
         }
-
+    
         function showTFSeries() {
             showSeries("TF 石膏线", "https://dw819.github.io/TH/docs/TF石膏线 不涂底.jpg",
                 ["32mm", "36mm", "44mm", "50mm", "60mm", "75mm"], "showTFDetail");
         }
-
+    
         function showBrazilSeries() {
             showSeries("巴西白木木线", "https://dw819.github.io/TH/docs/巴西白木木线.jpg",
                 ["20mm", "25mm", "30mm", "35mm", "36mm"], "showBrazilDetail");
         }
-
+    
+        const detailImages = {
+            "TF": {
+                "32mm": ["file:///C:/Users/28768/Desktop/TCTF/TF20732√/1.jpg", "file:///C:/Users/28768/Desktop/TCTF/TF20732√/2.jpg",
+                          
+                ],
+                "36mm": ["https://dw819.github.io/TH/docs/TH_36mm_1.jpg", "https://dw819.github.io/TH/docs/TH_36mm_2.jpg"],
+                "44mm": ["https://dw819.github.io/TH/docs/TH_44mm_1.jpg", "https://dw819.github.io/TH/docs/TH_44mm_2.jpg"],
+            },
+            "TC": {
+                "14-21mm": ["https://dw819.github.io/TH/docs/TC_14-21mm_1.jpg", "https://dw819.github.io/TH/docs/TC_14-21mm_2.jpg"],
+                "23-25mm": ["https://dw819.github.io/TH/docs/TC_23-25mm_1.jpg", "https://dw819.github.io/TH/docs/TC_23-25mm_2.jpg"],
+            },
+            "TH": {
+                "32mm": ["https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/330f5383de150ace69d42e893f3f0efb.jpg", "https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/349823f63c810fc6d05a72c2ba9a1c54.jpg",
+                          "https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/59e82a1a20773f5c89a198135f2210a4.jpg","https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/701357bd348fa1d677bf6338f72cc297.jpg",
+                          "https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/8360c31e2eb8946d89c73f8b6890a448.jpg","https://raw.githubusercontent.com/dw819/TH/refs/heads/main/TH32mm/b3bea07e26a4ded50a324da84ae23688.jpg"],
+                "36mm": ["https://dw819.github.io/TH/docs/TC_23-25mm_1.jpg", "https://dw819.github.io/TH/docs/TC_23-25mm_2.jpg"],
+            }
+        };
+    
         function showDetail(size, series) {
-            let buttonsContainer = document.getElementById("buttons-container");
-            let mainImage = document.querySelector(".main-image");
+    let buttonsContainer = document.getElementById("buttons-container");
+    let mainImage = document.querySelector(".main-image");
 
-            currentPage = "detail";
+    currentPage = "detail";
 
-            buttonsContainer.innerHTML = `
-                <div class="image-grid">
-                    <img src="https://dw819.github.io/TH/docs/${series}_${size}_1.jpg" class="detail-image">
-                    <img src="https://dw819.github.io/TH/docs/${series}_${size}_2.jpg" class="detail-image">
-                </div>
-            `;
+    let images = detailImages[series] ? detailImages[series][size] : undefined;
 
-            mainImage.style.display = "none";
-        }
+    if (!images) {
+        alert("该型号的图片暂未上传");
+        return;
+    }
 
+    // 隐藏主图
+    mainImage.style.display = "none";
+
+    // 生成图片展示区域
+    buttonsContainer.innerHTML = `
+        <div class="image-grid" style="
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); 
+            gap: 10px; 
+            width: 100vw; 
+            height: 100vh; 
+            overflow-y: auto; 
+            padding: 10px;
+            align-items: center;
+            justify-items: center;
+            transition: all 0.3s ease-in-out;
+        ">
+            ${images.map(img => `<img src="${img}" class="detail-image" style="
+                width: 100%; 
+                max-width: 475px;
+                border-radius: 8px;
+                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                opacity: 0;
+                transform: scale(0.8);
+            ">`).join("")}
+        </div>
+
+        <style>
+            .image-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+                gap: 10px;
+                width: 100%;
+                padding: 10px;
+                justify-items: center;
+            }
+
+            /* 电脑端：每行最多 4 张 */
+            @media (min-width: 1024px) {
+                .image-grid {
+                    grid-template-columns: repeat(4, 1fr);
+                }
+            }
+
+            /* 平板端：每行 3 张 */
+            @media (max-width: 1023px) and (min-width: 768px) {
+                .image-grid {
+                    grid-template-columns: repeat(3, 1fr);
+                }
+            }
+
+            /* 手机端：每行 2 张 */
+            @media (max-width: 767px) {
+                .image-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            .detail-image {
+                width: 100%;
+                max-width: 100%;
+                border-radius: 8px;
+                transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        </style>
+    `;
+
+    // 添加动画效果，让图片逐步淡入 & 放大
+    setTimeout(() => {
+        document.querySelectorAll(".detail-image").forEach(img => {
+            img.style.opacity = "1";
+            img.style.transform = "scale(1)";
+        });
+    }, 50);
+}
+    
         function showTHDetail(size) { showDetail(size, "TH"); }
         function showTCDetail(size) { showDetail(size, "TC"); }
         function showTFDetail(size) { showDetail(size, "TF"); }
         function showBrazilDetail(size) { showDetail(size, "巴西白木"); }
-
+    
         function goBack() {
             if (currentPage === "detail" && lastSeriesFunction) {
                 lastSeriesFunction();
@@ -203,9 +298,9 @@
                 loadHomePage();
             }
         }
-
+    
         loadHomePage();
     </script>
-
+    
 </body>
 </html>
