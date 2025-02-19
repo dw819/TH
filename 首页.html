@@ -301,7 +301,10 @@
     border-radius: 8px;
     transition: box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
     cursor: pointer;
+    outline: none;  /* 取消默认的点击轮廓 */
+    -webkit-tap-highlight-color: transparent;  /* 取消移动端点击高亮 */
 }
+
 
 /* 🚀 悬停时增加阴影 + 变暗 */
 .detail-image:hover {
